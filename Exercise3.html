@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" media="screen" href="assets/css/bootstrap.min.css" />
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<style>
+h3, input, table{
+  margin-left: 30px;
+  font-size: 20px;
+}
+body{
+    background: rgba(0, 0, 0, 0.2)
+}
+/* 
+#myTable{
+    position:center;
+} */
+</style>
+</head>
+<body>
+    <h3>Filter data</h3>
+    <input id="input1" type="text" placeholder="type to search">
+    <div>
+        <table id="mytable"></table>
+    </div>
+    
+    
+    <script>
+    $.getJSON('https://swapi.co/api/planets/?page=2', function (data){
+        console.log(data.results);
+        console.log(data.results.length);
+        console.log(data.results[0]);
+        $('#mytable').append("<table align='center' class='head table table-stripped'><tr><td align='center' width='160'>nama</td><td align='center' width='160'>age</td><td align='center' width='160'>climate</td><td align='center width='180'>diameter</td><td align='center' width='180'>terrain</td></tr></table>");
+
+        for (var i = 0; i < data.results.length; i++){
+            var name = data.results[i].name;
+            console.log(name);
+            var age = data.results[i].rotation_period;
+            console.log(age);
+            var der = data.results[i].climate;
+            console.log(der);
+            var ter = data.results[i].terrain;
+            console.log(ter);
+            var diameter = data.results[i].diameter;
+            console.log(diameter);
+
+            var rotation_period = data.results[i].rotation_period;
+            var climate = data.results[i].climate;
+            var terrain = data.results[i].climate;
+
+        $('#mytable').append("<table align='center' class='table table-stripped'><tr><td align='center' width='160'>"+name+"</td><td align='center' width='160'>"+rotation_period+"</td><td align='center' width='160'>"+climate+"</td><td align='center' width='180'>"+diameter+"</td><td align='center' width='180'>"+terrain+"</td></tr></table>");
+        
+        }
+    }
+    );
+
+    $(document).ready(function(){
+        $("#input1").on("keyup", function(){
+            var value = $(this).val().toLowerCase();
+            $("#mytable tr").filter(function(){
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        }
+        );
+    }
+    );
+
+    
+    </script>
+    
+</body>
+</html>
